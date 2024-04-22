@@ -13,6 +13,4 @@
         android:fromAlpha="1"
         android:toAlpha="0">
     </alpha>
-
-
 </set>

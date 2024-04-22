@@ -5,31 +5,30 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment_home"
+    tools:context=".Fragment_waitingline"
     android:tag="@string/app_name">
 
+    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="12dp"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/welcome_home"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:textColor="@color/white"
+            android:textStyle="bold|italic"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:text="Hàng chờ "
+            android:background="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="8dp"
-        android:visibility="invisible"
         android:id="@+id/swipeLayoutHome">
         <ListView
             android:id="@+id/lvDrinkStack"

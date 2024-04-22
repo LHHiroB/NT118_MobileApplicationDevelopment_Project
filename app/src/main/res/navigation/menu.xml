@@ -20,7 +20,16 @@
         android:label="fragment_statistic"
         tools:layout="@layout/fragment_statistic" >
         <action
-            android:id="@+id/action_fragment_statistic_to_fragment_table"
+            android:id="@+id/action_fragment_statistic_to_fragment_waitingline"
+            app:destination="@id/fragment_waitingline" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_waitingline"
+        android:name="com.example.doannhom11.Fragment_waitingline"
+        android:label="fragment_waitingline"
+        tools:layout="@layout/fragment_waitingline" >
+        <action
+            android:id="@+id/action_fragment_waitingline_to_fragment_table"
             app:destination="@id/fragment_table" />
     </fragment>
     <fragment

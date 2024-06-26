@@ -8,7 +8,8 @@
     android:paddingRight="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment_staff_info">
+    tools:context="com.example.doannhom8.Fragment_staff_info">
+
     <ImageView
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
@@ -16,18 +17,18 @@
         android:layout_marginTop="70dp"
         android:layout_width="match_parent"
         android:layout_height="288dp"
-        android:src="@drawable/round_bg_white_min">
-    </ImageView>
-
+        android:src="@drawable/round_bg_white_min" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <RelativeLayout
                 android:gravity="center"
                 android:layout_gravity="center"
@@ -41,6 +42,7 @@
                     android:paddingRight="36dp"
                     android:paddingBottom="8dp"
                     android:src="@drawable/ic_delete" />
+
                 <TextView
                     android:text="Xóa"
                     android:textSize="15sp"
@@ -68,9 +70,6 @@
                     android:paddingBottom="8dp"
                     android:src="@drawable/ic_baseline_edit_24" />
             </RelativeLayout>
-
-
-
         </LinearLayout>
 
         <com.makeramen.roundedimageview.RoundedImageView
@@ -84,8 +83,8 @@
             app:layout_constraintTop_toTopOf="parent"
             android:scaleType="centerCrop"
             android:layout_width="112dp"
-            android:layout_height="112dp">
-        </com.makeramen.roundedimageview.RoundedImageView>
+            android:layout_height="112dp" />
+
         <TextView
             android:id="@+id/edtName"
             android:layout_gravity="center"
@@ -104,6 +103,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <LinearLayout
                 android:layout_weight="4"
                 android:layout_marginTop="10dp"
@@ -111,6 +111,7 @@
                 android:gravity="center"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:text="Chức vụ"
                     android:textSize="20sp"
@@ -119,14 +120,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
-                <!--                Sử dụng Spinner để khi ấn vào nút tam giác nó sẽ xổ ra các lựa chọn-->
-                <!--                1. Admin-->
-                <!--                2. Staff-->
-                <!--                <Spinner-->
-                <!--                    android:layout_marginTop="8dp"-->
-                <!--                    android:id="@+id/spinner"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content" />-->
                 <TextView
                     android:id="@+id/tvPosition"
                     android:text="Nhân viên"
@@ -138,7 +131,6 @@
                     android:textColor="@color/dennhat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-
             </LinearLayout>
 
             <ImageView
@@ -155,6 +147,7 @@
                 android:gravity="center"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:text="Giới tính"
                     android:textSize="20sp"
@@ -163,15 +156,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
-                <!--   Giới tính,Sử dụng Spinner để khi ấn vào nút tam giác nó sẽ xổ ra các lựa chọn-->
-                <!--   1. Nam-->
-                <!--   2. Nữ-->
-                <!--   3. Khác-->
-                <!--                <Spinner-->
-                <!--                    android:layout_marginTop="8dp"-->
-                <!--                    android:id="@+id/spinner2"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content" />-->
                 <TextView
                     android:id="@+id/tvGender"
                     android:text="Nữ"
@@ -181,16 +165,16 @@
                     android:textColor="@color/dennhat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-
             </LinearLayout>
-
         </LinearLayout>
+
         <LinearLayout
             android:layout_marginTop="16dp"
             android:layout_gravity="center"
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/imgEmail"
                 android:padding="12dp"
@@ -200,37 +184,38 @@
                 android:textColor="@color/white"
                 android:layout_width="56dp"
                 android:layout_height="56dp"/>
+
             <ImageView
                 android:id="@+id/imgMessage"
                 android:padding="12dp"
                 android:src="@drawable/ic_message"
                 android:gravity="center"
                 android:background="@drawable/circle_img"
-                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
                 android:textSize="25sp"
                 android:textColor="@color/white"
                 android:layout_width="56dp"
                 android:layout_height="56dp"/>
+
             <ImageView
                 android:id="@+id/imgPhone"
                 android:padding="12dp"
                 android:src="@drawable/ic_phone1"
                 android:gravity="center"
                 android:background="@drawable/circle_img_green_nhat"
-                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
                 android:textSize="25sp"
                 android:textColor="@color/white"
                 android:layout_width="56dp"
                 android:layout_height="56dp"/>
-
         </LinearLayout>
 
         <ScrollView
             android:layout_marginTop="32dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <LinearLayout
 
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -244,19 +229,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/ic_cmnd">
-
-                    </ImageView>
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/ic_cmnd" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginEnd="8dp"
                         android:text="CCCD/CMND:"
                         android:textColor="@color/dennhat"
-                        android:textSize="18sp"
-                        />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/tvCCCD"
@@ -266,32 +248,29 @@
                         android:textColor="@color/dennhat"
                         android:textStyle="bold"
                         android:textSize="18sp" />
-
                 </LinearLayout>
-
-
-
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_marginTop="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <ImageView
-                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_cake"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    </ImageView>
+                        android:layout_height="wrap_content" />
+
                     <TextView
-                        android:layout_marginRight="8dp"
+                        android:layout_marginEnd="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ngày sinh:"
                         android:textColor="@color/dennhat"
-                        android:textSize="18sp"
-                        />
+                        android:textSize="18sp" />
+
                     <TextView
                         android:id="@+id/tvDob"
                         android:textStyle="bold"
@@ -301,26 +280,28 @@
                         android:textColor="@color/dennhat"
                         android:textSize="18sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_marginTop="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <ImageView
-                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
                         android:layout_gravity="center"
                         android:src="@drawable/ic__date_range"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    </ImageView>
+                        android:layout_height="wrap_content" />
+
                     <TextView
-                        android:layout_marginRight="8dp"
+                        android:layout_marginEnd="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ngày vào làm:"
                         android:textColor="@color/dennhat"
-                        android:textSize="18sp"
-                        />
+                        android:textSize="18sp" />
+
                     <TextView
                         android:id="@+id/tvBeginDate"
                         android:layout_width="match_parent"
@@ -331,29 +312,27 @@
                         android:textSize="18sp" />
                 </LinearLayout>
 
-
-
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_marginTop="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <ImageView
-                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_phone"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    </ImageView>
+                        android:layout_height="wrap_content" />
 
                     <TextView
-                        android:layout_marginRight="8dp"
+                        android:layout_marginEnd="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Số điện thoại:"
                         android:textColor="@color/dennhat"
-                        android:textSize="18sp"
-                        />
+                        android:textSize="18sp" />
+
                     <TextView
                         android:id="@+id/tvPhone1"
                         android:layout_width="match_parent"
@@ -364,29 +343,27 @@
                         android:textSize="18sp" />
                 </LinearLayout>
 
-
-
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_marginTop="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <ImageView
-                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_baseline_mail_24"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    </ImageView>
+                        android:layout_height="wrap_content" />
 
                     <TextView
-                        android:layout_marginRight="8dp"
+                        android:layout_marginEnd="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Email:"
                         android:textColor="@color/dennhat"
-                        android:textSize="18sp"
-                        />
+                        android:textSize="18sp" />
+
                     <TextView
                         android:id="@+id/tvHSL"
                         android:layout_width="match_parent"
@@ -396,7 +373,6 @@
                         android:textColor="@color/dennhat"
                         android:textSize="18sp" />
                 </LinearLayout>
-
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:163074533663:android:71edd0c53465513158282a",
         "android_client_info": {
-          "package_name": "com.example.doannhom11"
+          "package_name": "com.example.doannhom8"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "163074533663-t7h73778vjc9es4hsgo747lj34llpss9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.doannhom11",
+            "package_name": "com.example.doannhom8",
             "certificate_hash": "f3ecf4159ea52e44b66dc52f52e79427e3cdc301"
           }
         },

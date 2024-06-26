@@ -3,18 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <androidx.cardview.widget.CardView
         app:cardCornerRadius="12dp"
         app:cardUseCompatPadding="true"
         app:cardElevation="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:padding="16dp"
             android:background="@color/white"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="134dp">
+
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imageDrinkupdate"
                 app:riv_oval="true"
@@ -24,15 +27,15 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:scaleType="centerCrop"
                 android:layout_width="100dp"
-                android:layout_height="100dp">
-            </com.makeramen.roundedimageview.RoundedImageView>
+                android:layout_height="100dp" />
 
             <LinearLayout
                 android:layout_gravity="center"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:orientation="vertical"
                 android:layout_width="165dp"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:id="@+id/tvnameupdate"
                     android:text="Trà sữa"
@@ -41,17 +44,20 @@
                     android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
+
                 <LinearLayout
                     android:layout_marginTop="4dp"
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:text="Giá: "
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
+
                     <TextView
                         android:id="@+id/tvmaspupdate"
                         android:layout_width="wrap_content"
@@ -60,6 +66,7 @@
                         android:textStyle="bold"
                         android:textColor="@color/color_main"
                         android:textSize="16sp" />
+
                     <TextView
                         android:id="@+id/tvpriceupdate"
                         android:text="10"
@@ -68,10 +75,7 @@
                         android:textStyle="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
-
                 </LinearLayout>
-
-
             </LinearLayout>
 
             <RelativeLayout
@@ -84,11 +88,10 @@
                     android:alpha="0.8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerInParent="true"
                     android:src="@drawable/ic_info" />
             </RelativeLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 </LinearLayout>

@@ -5,9 +5,7 @@
     android:layout_height="match_parent"
     android:background="#F4E5C4"
     android:orientation="vertical"
-    tools:context=".Fragment_menu_item">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context="com.example.doannhom8.Fragment_menu_item">
 
     <EditText
         android:id="@+id/edtcoffee"
@@ -17,12 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/round_bg_btn_white"
-        android:drawableLeft="@drawable/ic_search"
+        android:drawableStart="@drawable/ic_search"
         android:drawablePadding="9dp"
         android:hint="Tìm kiếm"
         android:padding="10dp"
         android:textColorHint="@color/dennhat"
         android:textSize="16sp" />
+
     <ListView
         android:id="@+id/lvcoffee"
         android:scrollbars="none"
@@ -32,6 +31,5 @@
         android:divider="@null"
         android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
+        android:layout_height="match_parent" />
 </LinearLayout>

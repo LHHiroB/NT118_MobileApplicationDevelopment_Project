@@ -8,14 +8,14 @@
     android:paddingRight="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment_staff_edit">
+    tools:context="com.example.doannhom8.Fragment_staff_edit">
 
-    <!-- TODO: Update blank fragment layout -->
     <ImageView
         android:id="@+id/btnBack1"
         android:src="@drawable/ic_arrow_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
     <ImageView
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
@@ -23,13 +23,14 @@
         android:layout_marginTop="70dp"
         android:layout_width="match_parent"
         android:layout_height="248dp"
-        android:src="@drawable/round_bg_white_min">
-    </ImageView>
+        android:src="@drawable/round_bg_white_min" />
+
     <LinearLayout
         android:layout_marginTop="30dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <RelativeLayout
             android:layout_gravity="center"
             android:layout_width="wrap_content"
@@ -46,25 +47,19 @@
                 android:src="@drawable/atvimg"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:riv_oval="true">
-
-            </com.makeramen.roundedimageview.RoundedImageView>
+                app:riv_oval="true" />
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:layout_alignRight="@id/avatar"
+                android:layout_alignEnd="@id/avatar"
                 android:layout_marginTop="80dp"
                 android:background="@drawable/circle_img_white"
                 android:padding="5dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_camera_alt"
-                app:riv_oval="true">
-            </com.makeramen.roundedimageview.RoundedImageView>
-
-
+                app:riv_oval="true" />
         </RelativeLayout>
-
 
         <EditText
             android:id="@+id/edtName"
@@ -76,7 +71,6 @@
             android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -102,14 +96,6 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <!--                Sử dụng Spinner để khi ấn vào nút tam giác nó sẽ xổ ra các lựa chọn-->
-                <!--                1. Admin-->
-                <!--                2. Staff-->
-                <!--                <Spinner-->
-                <!--                    android:layout_marginTop="8dp"-->
-                <!--                    android:id="@+id/spinner"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content" />-->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -129,13 +115,10 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="-40dp"
-                        android:src="@drawable/ic_arrow_drop_down"></ImageView>
-
+                        android:layout_marginStart="-40dp"
+                        android:src="@drawable/ic_arrow_drop_down" />
                 </LinearLayout>
-
             </LinearLayout>
-
 
             <ImageView
                 android:layout_width="2dp"
@@ -160,10 +143,6 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <!--   Giới tính,Sử dụng Spinner để khi ấn vào nút tam giác nó sẽ xổ ra các lựa chọn-->
-                <!--   1. Nam-->
-                <!--   2. Nữ-->
-                <!--   3. Khác-->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -183,13 +162,10 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="-40dp"
-                        android:src="@drawable/ic_arrow_drop_down"></ImageView>
-
+                        android:layout_marginStart="-40dp"
+                        android:src="@drawable/ic_arrow_drop_down" />
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
 
         <ScrollView
@@ -198,31 +174,29 @@
             android:layout_marginTop="44dp">
 
             <LinearLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <ImageView
                         android:layout_gravity="center"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginEnd="8dp"
                         android:src="@drawable/ic_cmnd"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content" />
 
-                    </ImageView>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="CCCD/CMND:"
                         android:textColor="@color/dennhat"
                         android:textSize="18sp"/>
-
                 </LinearLayout>
-
 
                 <EditText
                     android:id="@+id/edtCCCD"
@@ -234,25 +208,27 @@
                     android:padding="12dp"
                     android:textSize="18sp"
                     tools:ignore="SpeakableTextPresentCheck" />
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_marginRight="8dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_cake"
-                    android:layout_width="wrap_content"
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                </ImageView>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ngày sinh:"
-                    android:textColor="@color/dennhat"
-                    android:textSize="18sp"/>
-            </LinearLayout>
+
+                    <ImageView
+                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_cake"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ngày sinh:"
+                        android:textColor="@color/dennhat"
+                        android:textSize="18sp"/>
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/edtDob"
@@ -268,26 +244,26 @@
                     android:textSize="18sp"
                     tools:ignore="SpeakableTextPresentCheck" />
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_marginRight="8dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic__date_range"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                </ImageView>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ngày vào làm:"
-                    android:textColor="@color/dennhat"
-                    android:textSize="18sp"/>
-            </LinearLayout>
 
+                    <ImageView
+                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic__date_range"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ngày vào làm:"
+                        android:textColor="@color/dennhat"
+                        android:textSize="18sp"/>
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/edtBeginDate"
@@ -302,26 +278,27 @@
                     android:padding="12dp"
                     android:textSize="18sp"
                     tools:ignore="SpeakableTextPresentCheck" />
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_marginRight="8dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </ImageView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Số điện thoại:"
-                    android:textColor="@color/dennhat"
-                    android:textSize="18sp"/>
-            </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Số điện thoại:"
+                        android:textColor="@color/dennhat"
+                        android:textSize="18sp"/>
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/edtPhone"
@@ -332,26 +309,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="18sp" />
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_marginRight="8dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_baseline_mail_24"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </ImageView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Email:"
-                    android:textColor="@color/dennhat"
-                    android:textSize="18sp"/>
-            </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_baseline_mail_24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email:"
+                        android:textColor="@color/dennhat"
+                        android:textSize="18sp"/>
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/edtHSL"
@@ -377,10 +355,5 @@
             android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
-
     </LinearLayout>
-
-
-
 </FrameLayout>

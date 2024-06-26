@@ -14,6 +14,7 @@
             android:id="@+id/action_fragment_home_to_fragment_statistic"
             app:destination="@id/fragment_statistic" />
     </fragment>
+
     <fragment
         android:id="@+id/fragment_statistic"
         android:name="com.example.doannhom8.Fragment_statistic"
@@ -23,6 +24,7 @@
             android:id="@+id/action_fragment_statistic_to_fragment_waitingline"
             app:destination="@id/fragment_waitingline" />
     </fragment>
+
     <fragment
         android:id="@+id/fragment_waitingline"
         android:name="com.example.doannhom8.Fragment_waitingline"
@@ -32,6 +34,7 @@
             android:id="@+id/action_fragment_waitingline_to_fragment_table"
             app:destination="@id/fragment_table" />
     </fragment>
+
     <fragment
         android:id="@+id/fragment_table"
         android:name="com.example.doannhom8.Fragment_table"
@@ -45,6 +48,7 @@
             app:destination="@id/fragment_bill"
             app:enterAnim="@anim/zoom_in" />
     </fragment>
+
     <fragment
         android:id="@+id/fragment_menu"
         android:name="com.example.doannhom8.Fragment_menu"
@@ -62,6 +66,7 @@
             app:destination="@id/fragment_menu_item2"
             app:enterAnim="@anim/zoom_in" />
     </fragment>
+
     <fragment
         android:id="@+id/fragment_staff"
         android:name="com.example.doannhom8.Fragment_staff"
@@ -76,6 +81,7 @@
             app:destination="@id/fragment_staff_edit"
             app:enterAnim="@anim/from_right" />
     </fragment>
+
     <fragment
         android:id="@+id/fragment_staff_info"
         android:name="com.example.doannhom8.Fragment_staff_info"
@@ -89,6 +95,7 @@
             android:id="@+id/action_fragment_staff_info_to_fragment_staff"
             app:destination="@id/fragment_staff" />
     </fragment>
+
     <fragment
         android:id="@+id/fragment_bill"
         android:name="com.example.doannhom8.Fragment_bill"
@@ -99,6 +106,7 @@
             app:destination="@id/fragment_table"
             app:enterAnim="@anim/from_left" />
     </fragment>
+
     <fragment
         android:id="@+id/fragment_staff_edit"
         android:name="com.example.doannhom8.Fragment_staff_edit"
@@ -108,6 +116,7 @@
             android:id="@+id/action_fragment_staff_edit_to_fragment_staff"
             app:destination="@id/fragment_staff" />
     </fragment>
+
     <fragment
         android:id="@+id/fragment_menu_item"
         android:name="com.example.doannhom8.Fragment_menu_item"
@@ -123,6 +132,7 @@
             android:id="@+id/action_fragment_menu_item_to_fragment_order_notopping"
             app:destination="@id/fragment_order_notopping" />
     </fragment>
+
     <fragment
         android:id="@+id/fragment_order"
         android:name="com.example.doannhom8.Fragment_order"
@@ -135,6 +145,7 @@
             android:id="@+id/action_fragment_order_to_fragment_menu"
             app:destination="@id/fragment_menu" />
     </fragment>
+
     <fragment
         android:id="@+id/fragment_item_info"
         android:name="com.example.doannhom8.Fragment_item_info"
@@ -148,6 +159,7 @@
             android:id="@+id/action_fragment_item_info_to_fragment_menu_item2"
             app:destination="@id/fragment_menu_item2" />
     </fragment>
+
     <fragment
         android:id="@+id/fragment_item_edit"
         android:name="com.example.doannhom8.Fragment_item_edit"
@@ -157,6 +169,7 @@
             android:id="@+id/action_fragment_item_edit_to_fragment_menu_item2"
             app:destination="@id/fragment_menu_item2" />
     </fragment>
+
     <fragment
         android:id="@+id/fragment_menu_item2"
         android:name="com.example.doannhom8.Fragment_menu_item2"
@@ -174,6 +187,7 @@
             android:id="@+id/action_fragment_menu_item2_to_fragment_menu"
             app:destination="@id/fragment_menu" />
     </fragment>
+
     <fragment
         android:id="@+id/fragment_order_notopping"
         android:name="com.example.doannhom8.Fragment_order_notopping"
@@ -186,5 +200,4 @@
             android:id="@+id/action_fragment_order_notopping_to_fragment_menu"
             app:destination="@id/fragment_menu" />
     </fragment>
-
 </navigation>

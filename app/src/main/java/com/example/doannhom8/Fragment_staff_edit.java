@@ -24,7 +24,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import com.example.doannhom8.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -102,7 +102,7 @@ public class Fragment_staff_edit extends Fragment {
     FirebaseAuth mAuth;
     DocumentReference db;
 
-    private ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+    private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
@@ -117,7 +117,6 @@ public class Fragment_staff_edit extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_staff_edit, container, false);
 
         mAuth = FirebaseAuth.getInstance();
@@ -125,17 +124,16 @@ public class Fragment_staff_edit extends Fragment {
 
         SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
 
-        // initialize widget
-        edtDob =  (EditText)root.findViewById(R.id.edtDob);
-        edtBegin = (EditText)root.findViewById(R.id.edtBeginDate);
-        edtName = (EditText)root.findViewById(R.id.edtName);
-        edtId = (EditText)root.findViewById(R.id.edtCCCD);
-        edtPhone = (EditText)root.findViewById(R.id.edtPhone);
-        edtHSL =  (EditText)root.findViewById(R.id.edtHSL);
-        avatar = (ImageView) root.findViewById(R.id.avatar);
-        btnSave = (Button) root.findViewById(R.id.btnSaveInfoStaff);
-        genderSpinner = ((Spinner)root.findViewById(R.id.editGender));
-        positionSpinner = ((Spinner)root.findViewById(R.id.editPosition));
+        edtDob = root.findViewById(R.id.edtDob);
+        edtBegin = root.findViewById(R.id.edtBeginDate);
+        edtName = root.findViewById(R.id.edtName);
+        edtId = root.findViewById(R.id.edtCCCD);
+        edtPhone = root.findViewById(R.id.edtPhone);
+        edtHSL = root.findViewById(R.id.edtHSL);
+        avatar = root.findViewById(R.id.avatar);
+        btnSave = root.findViewById(R.id.btnSaveInfoStaff);
+        genderSpinner = root.findViewById(R.id.editGender);
+        positionSpinner = root.findViewById(R.id.editPosition);
 
         //set spinner
         genderAdaper = ArrayAdapter.createFromResource(getActivity(), R.array.gender, android.R.layout.simple_spinner_item);
@@ -152,58 +150,51 @@ public class Fragment_staff_edit extends Fragment {
         });
 
         btnSave.setOnClickListener(view -> {
-
-            // đợi hoàn thành firestore database
             ImageLoader.Upload("images/staff/", avatar);
-            // push du lieu len firestore database
         });
 
-        if (getArguments() != null) // Che do chinh sua nhan vien
+        if (getArguments() != null)
         {
             Bundle data = getArguments();
 
-            // hien thi thong tin co the thay doi duoc
             db.collection("/NHANVIEN/").document(data.getString("MANV"))
-                    .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful())
-                    {
-                        DocumentSnapshot snap =  task.getResult();
-                        edtName.setText(snap.getString("HOTEN"));
-                        edtId.setText(snap.getString("CCCD"));
-                        edtDob.setText(snap.getString("NGAYSINH"));
-                        edtBegin.setText(snap.getString("NGVL"));
-                        edtPhone.setText(snap.getString("SDT"));
-                        edtHSL.setText( ""+snap.getString("EMAIL"));
+                    .get().addOnCompleteListener(task -> {
+                        if (task.isSuccessful())
+                        {
+                            DocumentSnapshot snap =  task.getResult();
+                            edtName.setText(snap.getString("HOTEN"));
+                            edtId.setText(snap.getString("CCCD"));
+                            edtDob.setText(snap.getString("NGAYSINH"));
+                            edtBegin.setText(snap.getString("NGVL"));
+                            edtPhone.setText(snap.getString("SDT"));
+                            edtHSL.setText(snap.getString("EMAIL"));
 
-                        int gender;
+                            int gender;
 
-                        if (snap.getString("GIOITINH").equals("Nam"))
-                            gender = 0;
-                        else if (snap.getString("GIOITINH").equals("Nữ"))
-                            gender = 1;
-                        else
-                            gender = 2;
-                        genderSpinner.setSelection(gender);
+                            if (snap.getString("GIOITINH").equals("Nam"))
+                                gender = 0;
+                            else if (snap.getString("GIOITINH").equals("Nữ"))
+                                gender = 1;
+                            else
+                                gender = 2;
+                            genderSpinner.setSelection(gender);
 
-                        int position;
-                        if (snap.getString("CHUCVU").equals("Quản lý"))
-                            position = 0;
-                        else if (snap.getString("CHUCVU").equals("Phục vụ"))
-                            position = 1;
-                        else if (snap.getString("CHUCVU").equals("Thu ngân"))
-                            position = 2;
-                        else if (snap.getString("CHUCVU").equals("Bảo vệ"))
-                            position = 3;
-                        else
-                            position = 4;
-                        positionSpinner.setSelection(position);
-                    }
-                }
-            });
+                            int position;
+                            if (Objects.equals(snap.getString("CHUCVU"), "Quản lý"))
+                                position = 0;
+                            else if (Objects.equals(snap.getString("CHUCVU"), "Phục vụ"))
+                                position = 1;
+                            else if (Objects.equals(snap.getString("CHUCVU"), "Thu ngân"))
+                                position = 2;
+                            else if (Objects.equals(snap.getString("CHUCVU"), "Bảo vệ"))
+                                position = 3;
+                            else
+                                position = 4;
+                            positionSpinner.setSelection(position);
+                        }
+                    });
 
-            ImageLoader.Load("images/staff/" + data.getString("MANV") + ".jpg", ((ImageView)root.findViewById(R.id.avatar)));
+            ImageLoader.Load("images/staff/" + data.getString("MANV") + ".jpg", root.findViewById(R.id.avatar));
 
             try {
                 myCalendar1.setTime(dateFormat.parse(edtDob.getText().toString()));
@@ -215,44 +206,32 @@ public class Fragment_staff_edit extends Fragment {
 
         edtDob.setOnClickListener(view -> {
 
-            DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                    myCalendar1.set(Calendar.YEAR, year);
-                    myCalendar1.set(Calendar.MONTH, month);
-                    myCalendar1.set(Calendar.DAY_OF_MONTH, day);
+            DatePickerDialog.OnDateSetListener date = (datePicker, year, month, day) -> {
+                myCalendar1.set(Calendar.YEAR, year);
+                myCalendar1.set(Calendar.MONTH, month);
+                myCalendar1.set(Calendar.DAY_OF_MONTH, day);
 
-                    ((EditText)view).setText(dateFormat.format(myCalendar1.getTime()));
-                }
+                ((EditText)view).setText(dateFormat.format(myCalendar1.getTime()));
             };
             new DatePickerDialog(getActivity(), date, myCalendar1.get(Calendar.YEAR), myCalendar1.get(Calendar.MONTH), myCalendar1.get(Calendar.DAY_OF_MONTH)).show();
         });
 
         edtBegin.setOnClickListener(view -> {
-            DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                    myCalendar2.set(Calendar.YEAR, year);
-                    myCalendar2.set(Calendar.MONTH, month);
-                    myCalendar2.set(Calendar.DAY_OF_MONTH, day);
+            DatePickerDialog.OnDateSetListener date = (datePicker, year, month, day) -> {
+                myCalendar2.set(Calendar.YEAR, year);
+                myCalendar2.set(Calendar.MONTH, month);
+                myCalendar2.set(Calendar.DAY_OF_MONTH, day);
 
-                    ((EditText)view).setText(dateFormat.format(myCalendar2.getTime()));
-                }
+                ((EditText)view).setText(dateFormat.format(myCalendar2.getTime()));
             };
             new DatePickerDialog(getActivity(), date, myCalendar2.get(Calendar.YEAR), myCalendar2.get(Calendar.MONTH), myCalendar2.get(Calendar.DAY_OF_MONTH)).show();
         });
 
-        // Xử lí nút quay về
-        ((ImageView)root.findViewById(R.id.btnBack1)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().onBackPressed();
-                // Nav cái này vẫn sài dc
-            }
+        root.findViewById(R.id.btnBack1).setOnClickListener(view -> {
+            getActivity().onBackPressed();
         });
 
-        // Xử lý nút Lưu có vấn đề về đổ db
-        ((Button)root.findViewById(R.id.btnSaveInfoStaff)).setOnClickListener(view ->{
+        root.findViewById(R.id.btnSaveInfoStaff).setOnClickListener(view ->{
 
             String cccd = edtId.getText().toString(),
             chucvu = positionSpinner.getSelectedItem().toString(),
@@ -264,7 +243,7 @@ public class Fragment_staff_edit extends Fragment {
             hsl = edtHSL.getText().toString();
 
 
-            if (getArguments() == null) // add mode
+            if (getArguments() == null)
             {
                 Map<String, Object> user = new HashMap<>();
                 user.put("CCCD", cccd);
@@ -277,17 +256,14 @@ public class Fragment_staff_edit extends Fragment {
                 user.put("SDT", sdt);
 
 
-                db.collection("/NHANVIEN/").add(user).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                        if (task.isSuccessful())
-                        {
-                            ImageLoader.Upload("images/staff/" + task.getResult().getId() + ".jpg", avatar);
-                        }
+                db.collection("/NHANVIEN/").add(user).addOnCompleteListener(task -> {
+                    if (task.isSuccessful())
+                    {
+                        ImageLoader.Upload("images/staff/" + task.getResult().getId() + ".jpg", avatar);
                     }
                 });
             }
-            else // edit mode
+            else
             {
                 Map<String, Object> user = new HashMap<>();
                 user.put("CCCD", cccd);

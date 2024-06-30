@@ -253,41 +253,6 @@
                     <ImageView
                         android:layout_marginEnd="8dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic__date_range"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ngày vào làm:"
-                        android:textColor="@color/dennhat"
-                        android:textSize="18sp"/>
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/edtBeginDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/round_edt"
-                    android:clickable="false"
-                    android:cursorVisible="false"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:padding="12dp"
-                    android:textSize="18sp"
-                    tools:ignore="SpeakableTextPresentCheck" />
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_marginEnd="8dp"
-                        android:layout_gravity="center"
                         android:src="@drawable/ic_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -341,6 +306,41 @@
                     android:padding="12dp"
                     android:textSize="18sp"
                     android:maxLines="1"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic__date_range"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ngày vào làm:"
+                        android:textColor="@color/dennhat"
+                        android:textSize="18sp"/>
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/edtBeginDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/round_edt"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:padding="12dp"
+                    android:textSize="18sp"
                     tools:ignore="SpeakableTextPresentCheck" />
             </LinearLayout>
         </ScrollView>

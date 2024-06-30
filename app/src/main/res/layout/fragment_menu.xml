@@ -91,6 +91,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:orientation="vertical"
+                        android:background="@drawable/img_milktea"
                         android:padding="12dp">
 
                         <LinearLayout
@@ -125,6 +126,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:orientation="vertical"
+                        android:background="@drawable/img_smoothie"
                         android:padding="12dp">
 
                         <LinearLayout
@@ -159,6 +161,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:orientation="vertical"
+                        android:background="@drawable/img_junkfood"
                         android:padding="12dp">
 
                         <LinearLayout
@@ -194,6 +197,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:orientation="vertical"
+                        android:background="@drawable/img_topping"
                         android:padding="12dp">
 
                         <LinearLayout

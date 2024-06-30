@@ -8,8 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.doannhom8.R;
-
 public class CustomToast {
     //info
     public static void i(Context mContext, String Message, int Duration) {

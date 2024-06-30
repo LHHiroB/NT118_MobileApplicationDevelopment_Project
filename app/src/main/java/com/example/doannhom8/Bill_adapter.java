@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.doannhom8.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;

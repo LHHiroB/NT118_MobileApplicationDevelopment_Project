@@ -1,18 +1,16 @@
 package com.example.doannhom8;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.example.doannhom8.R;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,18 +38,8 @@ public class Fragment_staff extends Fragment {
     private String mParam2;
 
     public Fragment_staff() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_staff.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Fragment_staff newInstance(String param1, String param2) {
         Fragment_staff fragment = new Fragment_staff();
         Bundle args = new Bundle();
@@ -68,7 +56,6 @@ public class Fragment_staff extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
     ImageView btnAddStaff;
     ArrayList<Staff> staffs;
@@ -81,7 +68,7 @@ public class Fragment_staff extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_staff, container, false);
 
-        listView = (ListView) root.findViewById(R.id.ListOfStaffs);
+        listView = root.findViewById(R.id.ListOfStaffs);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance().document("CUAHANG/" + mAuth.getUid());
@@ -104,11 +91,10 @@ public class Fragment_staff extends Fragment {
                                 MANV = data.getId(),
                                 Email = data.getString("EMAIL");
 
-                        staffs.add(new Staff(MANV, HOTEN, NGAYSINH, GIOITINH ,SDT, NGVL, CHUCVU, CCCD, Email ));
+                        staffs.add(new Staff(MANV, HOTEN, NGAYSINH, GIOITINH ,SDT, CHUCVU, CCCD, Email, NGVL));
                     }
                     adapter = new StaffAdapter(getActivity(), R.layout.layout_staff_manage, staffs);
                     listView.setAdapter(adapter);
-
                 }
             }
         });
@@ -120,7 +106,7 @@ public class Fragment_staff extends Fragment {
             Navigation.findNavController(view).navigate(R.id.action_fragment_staff_to_fragment_staff_info, bundle);
         });
 
-        ((ImageView)root.findViewById(R.id.btnAddInfo)).setOnClickListener(view -> {
+        root.findViewById(R.id.btnAddInfo).setOnClickListener(view -> {
             Navigation.findNavController(view).navigate(R.id.action_fragment_staff_to_fragment_staff_edit);
         });
 

@@ -10,8 +10,6 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.doannhom8.R;
-
 import java.util.ArrayList;
 
 public class Product {
@@ -139,7 +137,7 @@ class ProductAdapter extends BaseAdapter implements Filterable
         }
     }
 }
-// Dùng cho layout có thể update data
+
 class ProductAdapterUpdate extends BaseAdapter implements Filterable
 {
     TextView tvnameupdate, tvmaspupdate, tvpriceupdate;

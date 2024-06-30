@@ -8,14 +8,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-import com.example.doannhom8.R;
-
-
 import java.util.ArrayList;
+import java.util.Objects;
 
 class Staff {
-    private String MANV, HOTEN, NGAYSINH, GIOITINH, SDT, NGVL, CHUCVU, CCCD;
+    private String MANV, HOTEN, NGAYSINH, GIOITINH, SDT, CHUCVU, CCCD, NGVL, LUONG;
     private String email;
 
     public Staff(String ma_nha_vien,
@@ -23,19 +20,33 @@ class Staff {
                  String ngay_thang_nam_sinh,
                  String gioi_tinh,
                  String so_dien_thoai,
-                 String ngay_vao_lam,
                  String chuc_vu,
                  String cccd_cmnd,
-                 String email) {
+                 String email,
+                 String ngay_vao_lam) {
         MANV = ma_nha_vien;
         HOTEN = ho_va_ten;
         NGAYSINH = ngay_thang_nam_sinh;
         GIOITINH = gioi_tinh;
         SDT = so_dien_thoai;
-        NGVL = ngay_vao_lam;
         CHUCVU = chuc_vu;
         CCCD = cccd_cmnd;
         this.email = email;
+
+        NGVL = ngay_vao_lam;
+
+        if (Objects.equals(CHUCVU, "Quản lý"))
+            LUONG = "15.000.000đ";
+        else if (Objects.equals(CHUCVU, "Phục vụ"))
+            LUONG = "8.000.000đ";
+        else if (Objects.equals(CHUCVU, "Thu ngân"))
+            LUONG = "10.000.000đ";
+        else if (Objects.equals(CHUCVU, "Bảo vệ"))
+            LUONG = "8.000.000đ";
+        else if (Objects.equals(CHUCVU, "Pha chế"))
+            LUONG = "8.000.000đ";
+        else
+            LUONG = "5.000.000đ";
     }
 
     public String CCDD_CMND() {
@@ -58,9 +69,6 @@ class Staff {
         return SDT;
     }
 
-    public String NgayVaoLam() {
-        return NGVL;
-    }
 
     public String NgayThangNamSinh() {
         return NGAYSINH;
@@ -73,6 +81,11 @@ class Staff {
     public String getEmail() {
         return email;
     }
+
+    public String NgayVaoLam() {
+        return NGVL;
+    }
+    public String Luong() { return LUONG; }
 }
 
 public class StaffAdapter extends BaseAdapter {

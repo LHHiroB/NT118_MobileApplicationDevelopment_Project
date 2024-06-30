@@ -290,37 +290,6 @@
                     <ImageView
                         android:layout_marginEnd="10dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic__date_range"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:layout_marginEnd="8dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ngày vào làm:"
-                        android:textColor="@color/dennhat"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/tvBeginDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:textColor="@color/dennhat"
-                        android:text="10/10/2022"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_marginTop="12dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_marginEnd="10dp"
-                        android:layout_gravity="center"
                         android:src="@drawable/ic_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -371,6 +340,68 @@
                         android:textStyle="bold"
                         android:text="0"
                         android:textColor="@color/dennhat"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_marginEnd="10dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic__date_range"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_marginEnd="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ngày vào làm:"
+                        android:textColor="@color/dennhat"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tvBeginDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textColor="@color/dennhat"
+                        android:text="10/10/2022"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_marginEnd="10dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic__date_range"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_marginEnd="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lương:"
+                        android:textColor="@color/dennhat"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tvwages"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textColor="@color/dennhat"
+                        android:text="5.000.000 đ"
                         android:textSize="18sp" />
                 </LinearLayout>
             </LinearLayout>

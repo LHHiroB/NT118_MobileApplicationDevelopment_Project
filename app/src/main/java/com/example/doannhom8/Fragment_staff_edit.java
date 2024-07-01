@@ -39,35 +39,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_staff_edit#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Fragment_staff_edit extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public Fragment_staff_edit() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_staff_edit.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Fragment_staff_edit newInstance(String param1, String param2) {
         Fragment_staff_edit fragment = new Fragment_staff_edit();
         Bundle args = new Bundle();
@@ -81,8 +59,8 @@ public class Fragment_staff_edit extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            String mParam1 = getArguments().getString(ARG_PARAM1);
+            String mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -122,7 +100,7 @@ public class Fragment_staff_edit extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance().document("CUAHANG/" + mAuth.getUid());
 
-        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         edtDob = root.findViewById(R.id.edtDob);
         edtBegin = root.findViewById(R.id.edtBeginDate);
@@ -205,7 +183,6 @@ public class Fragment_staff_edit extends Fragment {
         }
 
         edtDob.setOnClickListener(view -> {
-
             DatePickerDialog.OnDateSetListener date = (datePicker, year, month, day) -> {
                 myCalendar1.set(Calendar.YEAR, year);
                 myCalendar1.set(Calendar.MONTH, month);
@@ -232,7 +209,6 @@ public class Fragment_staff_edit extends Fragment {
         });
 
         root.findViewById(R.id.btnSaveInfoStaff).setOnClickListener(view ->{
-
             String cccd = edtId.getText().toString(),
             chucvu = positionSpinner.getSelectedItem().toString(),
             gioitinh = genderSpinner.getSelectedItem().toString(),
@@ -286,6 +262,4 @@ public class Fragment_staff_edit extends Fragment {
 
         return root;
     }
-
-
 }

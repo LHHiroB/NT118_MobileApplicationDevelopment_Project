@@ -1,6 +1,5 @@
 package com.example.doannhom8;
 
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,13 +58,13 @@ public class Bill_adapter extends BaseAdapter {
         if (m_array.get(i).getTopping()==null || m_array.get(i).getTopping().equals(" "))
             toppingList.setVisibility(View.INVISIBLE);
         else {
-            String tp = ""; int i1 = 1, max =  m_array.get(i).getTopping().size();
+            StringBuilder tp = new StringBuilder(); int i1 = 1, max =  m_array.get(i).getTopping().size();
             for (Product data : m_array.get(i).getTopping()){
                 if(i1 >= max){
-                    tp += data.getTensp();
+                    tp.append(data.getTensp());
                 }
                 else {
-                    tp += data.getTensp() + ", ";
+                    tp.append(data.getTensp()).append(", ");
                 }
                 i1++;
             }

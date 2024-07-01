@@ -30,35 +30,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_item_edit#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Fragment_item_edit extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public Fragment_item_edit() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_item_edit.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Fragment_item_edit newInstance(String param1, String param2) {
         Fragment_item_edit fragment = new Fragment_item_edit();
         Bundle args = new Bundle();
@@ -72,8 +50,8 @@ public class Fragment_item_edit extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            String mParam1 = getArguments().getString(ARG_PARAM1);
+            String mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -85,7 +63,7 @@ public class Fragment_item_edit extends Fragment {
     FirebaseAuth mAuth;
     DocumentReference db;
 
-    private ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+    private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
@@ -99,18 +77,16 @@ public class Fragment_item_edit extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_item_edit, container, false);
 
-        edtNameDrink = (EditText)v.findViewById(R.id.edtNameDrink);
-        edtPrice = (EditText)v.findViewById(R.id.edtPrice);
-        imgDrink = (ImageView) v.findViewById(R.id.imgEditDink);
-        btnSaveDrink = (Button) v.findViewById(R.id.btnSaveDrink);
+        edtNameDrink = v.findViewById(R.id.edtNameDrink);
+        edtPrice = v.findViewById(R.id.edtPrice);
+        imgDrink = v.findViewById(R.id.imgEditDink);
+        btnSaveDrink = v.findViewById(R.id.btnSaveDrink);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance().document("CUAHANG/" + mAuth.getUid());
 
-        // thay đổi ảnh item
         imgDrink.setOnClickListener(view -> {
             Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             galleryIntent.setType("image/*");
@@ -119,7 +95,6 @@ public class Fragment_item_edit extends Fragment {
 
         btnSaveDrink.setOnClickListener(view -> {
             ImageLoader.Upload("images/goods/", imgDrink);
-            // push du lieu len firebase storage
         });
         Bundle data = getArguments();
 
@@ -141,23 +116,19 @@ public class Fragment_item_edit extends Fragment {
                 query = "/SANPHAM/TOPPING/DANHSACHTOPPING";
                 break;
         }
-        if (data.getString("Masp") != null) //edit mode
+        if (data.getString("Masp") != null)
         {
-            // hien thi thong tin co the thay doi duoc
             db.collection(query).document(data.getString("Masp"))
-                    .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot snap = task.getResult();
-                                edtNameDrink.setText(snap.getString("TEN"));
-                                edtPrice.setText( ""+snap.getLong("GIA"));
-                            }
+                    .get().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot snap = task.getResult();
+                            edtNameDrink.setText(snap.getString("TEN"));
+                            edtPrice.setText( ""+snap.getLong("GIA"));
                         }
                     });
-            ImageLoader.Load("images/goods/" + data.getString("Masp") + ".jpg", ((ImageView)v.findViewById(R.id.imgEditDink)));
+            ImageLoader.Load("images/goods/" + data.getString("Masp") + ".jpg", v.findViewById(R.id.imgEditDink));
         }
-        ((Button)v.findViewById(R.id.btnSaveDrink)).setOnClickListener(view ->{
+        v.findViewById(R.id.btnSaveDrink).setOnClickListener(view ->{
 
             String tensp = edtNameDrink.getText().toString(),
                     gia = edtPrice.getText().toString();
@@ -186,7 +157,7 @@ public class Fragment_item_edit extends Fragment {
                     }
                 });
             }
-            else // edit mode
+            else
             {
                 Map<String, Object> drink = new HashMap<>();
                 drink.put("TEN", tensp);
@@ -200,12 +171,7 @@ public class Fragment_item_edit extends Fragment {
 
             getActivity().onBackPressed();
         });
-        ((ImageView)v.findViewById(R.id.btnBack2)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().onBackPressed();
-            }
-        });
+        v.findViewById(R.id.btnBack2).setOnClickListener(view -> getActivity().onBackPressed());
         return v;
     }
 }

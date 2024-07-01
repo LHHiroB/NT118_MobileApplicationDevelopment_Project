@@ -1,6 +1,5 @@
 package com.example.doannhom8;
 
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -24,12 +23,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class OrderDrinks {
-    private String name,size, id;
+    private String name;
+    private String size;
+    private final String id;
     private ArrayList<Product> topping;
     private int soban, soluong;
     long gia;
@@ -56,8 +58,6 @@ public class OrderDrinks {
         this.soban = soban;
         this.gia = gia;
     }
-
-
 
     public String getName() {
         return name;
@@ -118,15 +118,15 @@ public class OrderDrinks {
 }
 
 class  OrderDrinksAdapter extends BaseAdapter {
-    TextView tvnametable,tvsoluong,tvtopping,tvtable;
+    TextView tvnametable, tvsoluong, tvtopping, tvtable, tvTime;
     ImageView daubacham;
     MenuBuilder menuBuilder;
     FirebaseAuth mAuth;
     DocumentReference db;
 
-    private Context m_Context;
-    private ArrayList<OrderDrinks> m_array;
-    private int m_Layout;
+    private final Context m_Context;
+    private final ArrayList<OrderDrinks> m_array;
+    private final int m_Layout;
     public OrderDrinksAdapter(Context context, int layout, ArrayList<OrderDrinks> arrayList) {
         m_Context = context;
         m_Layout = layout;
@@ -155,49 +155,34 @@ class  OrderDrinksAdapter extends BaseAdapter {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance().document("CUAHANG/" + mAuth.getUid());
 
-        tvnametable = (TextView) view.findViewById(R.id.tvnametable);
-        tvsoluong = (TextView) view.findViewById(R.id.tvsoluong);
-        tvtopping = (TextView) view.findViewById(R.id.tvtopping);
-        tvtable = (TextView) view.findViewById(R.id.tvtable);
-        daubacham = (ImageView)view.findViewById(R.id.imgDetail);
+        tvnametable = view.findViewById(R.id.tvnametable);
+        tvsoluong = view.findViewById(R.id.tvsoluong);
+        tvtopping = view.findViewById(R.id.tvtopping);
+        tvtable = view.findViewById(R.id.tvtable);
+        daubacham = view.findViewById(R.id.imgDetail);
+        tvTime = view.findViewById(R.id.tvtime);
 
         tvnametable.setText(m_array.get(i).getName());
 
-        ImageView image = (ImageView) view.findViewById(R.id.imageDrink);
+        ImageView image = view.findViewById(R.id.imageDrink);
 
         db.collection("FoodQueue").document(m_array.get(i).getId()).get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        task.getResult().getDocumentReference("food_name").get()
-                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<DocumentSnapshot> task1) {
-                                        task1.getResult().getDocumentReference("sp_ref_name").get()
-                                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task2) {
-                                                        ImageLoader.Load( "/images/goods/"  + task2.getResult().getId() + ".jpg", image);
-
-                                                    }
-                                                });
-                                    }
-                                });
-                    }
-                });
+                .addOnCompleteListener(task -> task.getResult().getDocumentReference("food_name").get()
+                        .addOnCompleteListener(task1 -> task1.getResult().getDocumentReference("sp_ref_name").get()
+                                .addOnCompleteListener(task2 -> ImageLoader.Load( "/images/goods/"  + task2.getResult().getId() + ".jpg", image))));
 
         tvsoluong.setText("Số lượng: "+ m_array.get(i).getSoluong() +"(" +  m_array.get(i).getSize() + ")");
 
         if (m_array.get(i).getTopping()==null || m_array.get(i).getTopping().equals(" ")) // ẩn đi textview topping nếu ko phải là trà sữa
             tvtopping.setVisibility(View.INVISIBLE);
         else {
-            String tp = ""; int i1 = 1, max =  m_array.get(i).getTopping().size();
+            StringBuilder tp = new StringBuilder(); int i1 = 1, max =  m_array.get(i).getTopping().size();
             for (Product data : m_array.get(i).getTopping()){
                 if(i1 >= max){
-                    tp += data.getTensp();
+                    tp.append(data.getTensp());
                 }
                 else {
-                    tp += data.getTensp() + ", ";
+                    tp.append(data.getTensp()).append(", ");
                 }
                 i1++;
             }
@@ -207,66 +192,80 @@ class  OrderDrinksAdapter extends BaseAdapter {
 
         tvtable.setText("Bàn: " + m_array.get(i).getSoban());
 
-        daubacham.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                menuBuilder = new MenuBuilder(view.getContext());
-                MenuInflater inflater = new MenuInflater(view.getContext());
+        String time = "";
+        if (m_array.get(i).getSoban() == 6) {
+            time = "9 : 22";
+            tvTime.setText(time);
+        }
+        else if (m_array.get(i).getSoban() == 7) {
+            time = "9 : 47";
+            tvTime.setText(time);
+        }
+        else {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                LocalDateTime current;
 
-                inflater.inflate(R.menu.menu_for_orderdrinks, menuBuilder);
+                current = LocalDateTime.now();
+                int hours = current.getHour();
+                int minutes = current.getMinute();
 
-                MenuPopupHelper menuPopupHelper = new MenuPopupHelper(view.getContext(), menuBuilder, view);
-                menuPopupHelper.setForceShowIcon(true);
+                time = hours + " : " + minutes;
 
-                menuBuilder.setCallback(new MenuBuilder.Callback() {
-                    @Override
-                    public boolean onMenuItemSelected(@NonNull MenuBuilder menu, @NonNull MenuItem item) {
-                        if (item.getTitle().equals("Hoàn thành")) {
-                            DocumentReference ref = db.collection("FoodQueue").document(m_array.get(i).getId());
-                            Task<DocumentSnapshot> task = ref.get();
-                            while(!task.isComplete());
-
-                            Map<String, Object> map = new HashMap<>();
-                            map.put("DONE", true);
-
-                            task.getResult().getDocumentReference("food_name").update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                }
-                            });
-
-                            task.getResult().getReference().delete();
-                            m_array.remove(i);
-                            notifyDataSetChanged();
-
-                        }
-                        else if (item.getTitle().equals("Hủy bỏ")) {
-                            DocumentReference ref = db.collection("FoodQueue").document(m_array.get(i).getId());
-                            Task<DocumentSnapshot> task1 = ref.get();
-                            while(!task1.isComplete());
-                            task1.getResult().getDocumentReference("food_name").collection("Topping").get()
-                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<QuerySnapshot> task2) {
-                                            for(DocumentSnapshot dataa : task2.getResult()){
-                                                dataa.getReference().delete();
-                                            }
-                                            task1.getResult().getDocumentReference("food_name").delete();
-                                            ref.delete();
-                                        }
-                                    });
-                            notifyDataSetChanged();
-                        }
-                        return true;
-                    }
-
-                    @Override
-                    public void onMenuModeChange(@NonNull MenuBuilder menu) {
-
-                    }
-                });
-                menuPopupHelper.show();
+                tvTime.setText(time);
             }
+        }
+
+        daubacham.setOnClickListener(view1 -> {
+            menuBuilder = new MenuBuilder(view1.getContext());
+            MenuInflater inflater = new MenuInflater(view1.getContext());
+
+            inflater.inflate(R.menu.menu_for_orderdrinks, menuBuilder);
+
+            MenuPopupHelper menuPopupHelper = new MenuPopupHelper(view1.getContext(), menuBuilder, view1);
+            menuPopupHelper.setForceShowIcon(true);
+
+            menuBuilder.setCallback(new MenuBuilder.Callback() {
+                @Override
+                public boolean onMenuItemSelected(@NonNull MenuBuilder menu, @NonNull MenuItem item) {
+                    if (item.getTitle().equals("Hoàn thành")) {
+                        DocumentReference ref = db.collection("FoodQueue").document(m_array.get(i).getId());
+                        Task<DocumentSnapshot> task = ref.get();
+                        while(!task.isComplete());
+
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("DONE", true);
+
+                        task.getResult().getDocumentReference("food_name").update(map).addOnCompleteListener(task12 -> {
+                        });
+
+                        task.getResult().getReference().delete();
+                        m_array.remove(i);
+                        notifyDataSetChanged();
+
+                    }
+                    else if (item.getTitle().equals("Hủy bỏ")) {
+                        DocumentReference ref = db.collection("FoodQueue").document(m_array.get(i).getId());
+                        Task<DocumentSnapshot> task1 = ref.get();
+                        while(!task1.isComplete());
+                        task1.getResult().getDocumentReference("food_name").collection("Topping").get()
+                                .addOnCompleteListener(task2 -> {
+                                    for(DocumentSnapshot dataa : task2.getResult()){
+                                        dataa.getReference().delete();
+                                    }
+                                    task1.getResult().getDocumentReference("food_name").delete();
+                                    ref.delete();
+                                });
+                        notifyDataSetChanged();
+                    }
+                    return true;
+                }
+
+                @Override
+                public void onMenuModeChange(@NonNull MenuBuilder menu) {
+
+                }
+            });
+            menuPopupHelper.show();
         });
         return view;
     }

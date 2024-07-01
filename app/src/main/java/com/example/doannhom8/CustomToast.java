@@ -9,7 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class CustomToast {
-    //info
     public static void i(Context mContext, String Message, int Duration) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.toast_layout, null);
         ((ImageView) view.findViewById(R.id.toast_icon)).setImageResource(R.drawable.ic_baseline_info_24);
@@ -22,7 +21,7 @@ public class CustomToast {
 
         toast.show();
     }
-    //warning
+
     public static void w(Context mContext, String Message, int Duration)
     {
         View view = LayoutInflater.from(mContext).inflate(R.layout.toast_layout, null);
@@ -37,7 +36,6 @@ public class CustomToast {
         toast.show();
     }
 
-    //error
     public static void e(Context mContext, String Message, int Duration)
     {
         View view = LayoutInflater.from(mContext).inflate(R.layout.toast_layout, null);

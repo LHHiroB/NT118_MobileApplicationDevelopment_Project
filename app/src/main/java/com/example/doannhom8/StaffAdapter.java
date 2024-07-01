@@ -130,5 +130,4 @@ public class StaffAdapter extends BaseAdapter {
 
         return view;
     }
-
 }

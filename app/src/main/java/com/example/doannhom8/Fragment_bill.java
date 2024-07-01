@@ -1,6 +1,5 @@
 package com.example.doannhom8;
 
-
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -12,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -35,35 +32,13 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_bill#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Fragment_bill extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public Fragment_bill() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_bill.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Fragment_bill newInstance(String param1, String param2) {
         Fragment_bill fragment = new Fragment_bill();
         Bundle args = new Bundle();
@@ -77,8 +52,8 @@ public class Fragment_bill extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            String mParam1 = getArguments().getString(ARG_PARAM1);
+            String mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -96,7 +71,6 @@ public class Fragment_bill extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bill, container, false);
 
         mAuth = FirebaseAuth.getInstance();
@@ -111,20 +85,9 @@ public class Fragment_bill extends Fragment {
         getTableNumber(view);
         loadFoodIntoBill();
 
-        ((ImageView) view.findViewById(R.id.btnBack)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_fragment_bill_to_fragment_table);
-            }
-        });
+        view.findViewById(R.id.btnBack).setOnClickListener(view1 -> Navigation.findNavController(view1).navigate(R.id.action_fragment_bill_to_fragment_table));
 
-        ((Button) view.findViewById(R.id.btnPay)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openPayDialog(Gravity.CENTER, view);
-            }
-        });
-
+        view.findViewById(R.id.btnPay).setOnClickListener(view12 -> openPayDialog(Gravity.CENTER, view12));
 
         return view;
     }
@@ -132,69 +95,66 @@ public class Fragment_bill extends Fragment {
     private void loadFoodIntoBill() {
 
         db.collection("/TableStatus/" + tableId + "/DrinksOrder").get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task1) {
-                        arrayList = new ArrayList<>();
-                        ref_topping = new ArrayList<>();
-                        adapter = new Bill_adapter(getActivity(),R.layout.layout_bill,arrayList);
-                        listFood.setAdapter(adapter);
+                .addOnCompleteListener(task1 -> {
+                    arrayList = new ArrayList<>();
+                    ref_topping = new ArrayList<>();
+                    adapter = new Bill_adapter(getActivity(),R.layout.layout_bill,arrayList);
+                    listFood.setAdapter(adapter);
 
-                        for(DocumentSnapshot data : task1.getResult()){
-                            long GIA;
+                    for(DocumentSnapshot data : task1.getResult()){
+                        long GIA;
 
-                            if(data.getBoolean("DONE")){
-                                OrderDrinks good = new OrderDrinks(data.getId());
-                                arrayList.add(good);
-                                adapter.notifyDataSetChanged();
+                        if(data.getBoolean("DONE")){
+                            OrderDrinks good = new OrderDrinks(data.getId());
+                            arrayList.add(good);
+                            adapter.notifyDataSetChanged();
 
-                                good.setSize(data.getString("SIZE"));
-                                good.setSoluong(Integer.parseInt(data.getLong("SOLUONG") + ""));
-                                GIA = data.getLong("GIA");
-                                good.setGia(GIA);
-                                sum += GIA;
-                                adapter.notifyDataSetChanged();
+                            good.setSize(data.getString("SIZE"));
+                            good.setSoluong(Integer.parseInt(data.getLong("SOLUONG") + ""));
+                            GIA = data.getLong("GIA");
+                            good.setGia(GIA);
+                            sum += GIA;
+                            adapter.notifyDataSetChanged();
 
-                                data.getDocumentReference("sp_ref_name").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<DocumentSnapshot> task2) {
-                                        good.setName(task2.getResult().getString("TEN"));
-                                        adapter.notifyDataSetChanged();
+                            data.getDocumentReference("sp_ref_name").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task2) {
+                                    good.setName(task2.getResult().getString("TEN"));
+                                    adapter.notifyDataSetChanged();
 
-                                        if (task2.getResult().getReference().getParent().getParent().getId().equals("TRASUA")) {
-                                            good.setTopping(new ArrayList<Product>());
+                                    if (task2.getResult().getReference().getParent().getParent().getId().equals("TRASUA")) {
+                                        good.setTopping(new ArrayList<>());
 
-                                            data.getReference().collection("Topping").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<QuerySnapshot> task3) {
-                                                    for(DocumentSnapshot dataaaa : task3.getResult()){
-                                                        Product topping = new Product();
-                                                        good.addTopping(topping);
-                                                        adapter.notifyDataSetChanged();
+                                        data.getReference().collection("Topping").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task3) {
+                                                for(DocumentSnapshot dataaaa : task3.getResult()){
+                                                    Product topping = new Product();
+                                                    good.addTopping(topping);
+                                                    adapter.notifyDataSetChanged();
 
-                                                        dataaaa.getDocumentReference("topping_ref").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task5) {
-                                                                topping.setMasp(task5.getResult().getReference().getId());
-                                                                topping.setTensp(task5.getResult().getString("TEN"));
-                                                                Log.i("Id", task5.getResult().getReference().getId() + "/nTen" + task5.getResult().getString("TEN"));
-                                                                topping.setGia(Integer.parseInt(task5.getResult().getLong("GIA") + ""));
+                                                    dataaaa.getDocumentReference("topping_ref").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task5) {
+                                                            topping.setMasp(task5.getResult().getReference().getId());
+                                                            topping.setTensp(task5.getResult().getString("TEN"));
+                                                            Log.i("Id", task5.getResult().getReference().getId() + "/nTen" + task5.getResult().getString("TEN"));
+                                                            topping.setGia(Integer.parseInt(task5.getResult().getLong("GIA") + ""));
 
-                                                                adapter.notifyDataSetChanged();
-                                                            }
-                                                        });
-                                                    }
+                                                            adapter.notifyDataSetChanged();
+                                                        }
+                                                    });
                                                 }
-                                            });
+                                            }
+                                        });
 
-                                        }
                                     }
-                                });
-                                overal.setText(sum + " đ");
-                            }
+                                }
+                            });
+                            overal.setText(sum + " đ");
                         }
-                        adapter.notifyDataSetChanged();
                     }
+                    adapter.notifyDataSetChanged();
                 });
 
 
@@ -217,19 +177,16 @@ public class Fragment_bill extends Fragment {
         windowAttribute.gravity = gravity;
         window.setAttributes(windowAttribute);
 
-        if(Gravity.CENTER == gravity){
-            dialog.setCancelable(true);
-        }
-        else dialog.setCancelable(false);
+        dialog.setCancelable(Gravity.CENTER == gravity);
 
-        ((Button)dialog.findViewById(R.id.btnNo)).setOnClickListener(new View.OnClickListener() {
+        dialog.findViewById(R.id.btnNo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
             }
         });
 
-        ((Button)dialog.findViewById(R.id.btnThanhToan)).setOnClickListener(new View.OnClickListener() {
+        dialog.findViewById(R.id.btnThanhToan).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Map<String, Object> map = new HashMap<>();
@@ -304,7 +261,7 @@ public class Fragment_bill extends Fragment {
 
         calendar = Calendar.getInstance();
         simpleDateFormat = new SimpleDateFormat("HH:mm EEEE, dd LLLL yyyy");
-        dateTime = simpleDateFormat.format(calendar.getTime()).toString();
+        dateTime = simpleDateFormat.format(calendar.getTime());
         ((TextView) view.findViewById(R.id.timeDate)).setText(dateTime);
     }
 }

@@ -52,9 +52,10 @@ class ProductAdapter extends BaseAdapter implements Filterable
 {
     TextView tvname,tvmasp,tvprice;
     ImageView ava;
-    private Context m_Context;
-    private ArrayList<Product> m_array,temp_array;
-    private int m_Layout;
+    private final Context m_Context;
+    private ArrayList<Product> m_array;
+    private final ArrayList<Product> temp_array;
+    private final int m_Layout;
     CustomFilter cs;
     public ProductAdapter(Context context, int layout, ArrayList<Product> arrayList)
     {
@@ -80,10 +81,10 @@ class ProductAdapter extends BaseAdapter implements Filterable
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = LayoutInflater.from(m_Context).inflate(m_Layout,null);
-        tvname = (TextView) view.findViewById(R.id.tvname);
-        tvmasp = (TextView) view.findViewById(R.id.tvmasp);
-        tvprice = (TextView) view.findViewById(R.id.tvprice);
-        ava = (ImageView) view.findViewById(R.id.imageDrink);
+        tvname = view.findViewById(R.id.tvname);
+        tvmasp = view.findViewById(R.id.tvmasp);
+        tvprice = view.findViewById(R.id.tvprice);
+        ava = view.findViewById(R.id.imageDrink);
 
         tvname.setText(m_array.get(i).getTensp());
         tvprice.setText(m_array.get(i).getGia()+" đ"); // gia'
@@ -93,7 +94,7 @@ class ProductAdapter extends BaseAdapter implements Filterable
     }
     @Override
     public Filter getFilter() {
-        if (cs==null)
+        if (cs == null)
         {
             cs = new CustomFilter();
         }
@@ -108,7 +109,7 @@ class ProductAdapter extends BaseAdapter implements Filterable
             if (constraint!= null &&  constraint.length()>0)
             {
                 constraint = constraint.toString().toUpperCase();
-                ArrayList<Product> filters = new ArrayList<>(); // bộ lọc
+                ArrayList<Product> filters = new ArrayList<>();
 
                 for (int i=0 ; i<temp_array.size();i++)
                 {
@@ -130,7 +131,7 @@ class ProductAdapter extends BaseAdapter implements Filterable
             return results;
         }
         @Override
-        protected void publishResults(CharSequence charSequence,FilterResults filterResults )
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults )
         {
             m_array = (ArrayList<Product>) filterResults.values;
             notifyDataSetChanged();
@@ -142,9 +143,10 @@ class ProductAdapterUpdate extends BaseAdapter implements Filterable
 {
     TextView tvnameupdate, tvmaspupdate, tvpriceupdate;
     ImageView avaupdate;
-    private Context m_Context;
-    private ArrayList<Product> m_array,temp_array;
-    private int m_Layout;
+    private final Context m_Context;
+    private ArrayList<Product> m_array;
+    private final ArrayList<Product> temp_array;
+    private final int m_Layout;
 
     CustomFilter cs;
 
@@ -173,13 +175,13 @@ class ProductAdapterUpdate extends BaseAdapter implements Filterable
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = LayoutInflater.from(m_Context).inflate(m_Layout, null);
-        tvnameupdate = (TextView) view.findViewById(R.id.tvnameupdate);
-        tvmaspupdate = (TextView) view.findViewById(R.id.tvmaspupdate);
-        tvpriceupdate = (TextView) view.findViewById(R.id.tvpriceupdate);
-        avaupdate = (ImageView) view.findViewById(R.id.imageDrinkupdate);
+        tvnameupdate = view.findViewById(R.id.tvnameupdate);
+        tvmaspupdate = view.findViewById(R.id.tvmaspupdate);
+        tvpriceupdate = view.findViewById(R.id.tvpriceupdate);
+        avaupdate = view.findViewById(R.id.imageDrinkupdate);
 
         tvnameupdate.setText(m_array.get(i).getTensp());
-        tvpriceupdate.setText("" + m_array.get(i).getGia() + " đ"); // giá
+        tvpriceupdate.setText(m_array.get(i).getGia() + " đ"); // giá
         tvmaspupdate.setText("");
 
         ImageLoader.Load( "/images/goods/"  + m_array.get(i).getMasp() + ".jpg", avaupdate);

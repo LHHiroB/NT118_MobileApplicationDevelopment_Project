@@ -48,7 +48,6 @@
             android:text="08:20 Monday, 01 July 2024"
             android:padding="8dp"/>
 
-
         <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"

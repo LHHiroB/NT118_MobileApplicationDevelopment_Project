@@ -21,21 +21,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_staff#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Fragment_staff extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public Fragment_staff() {
     }
@@ -53,8 +41,8 @@ public class Fragment_staff extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            String mParam1 = getArguments().getString(ARG_PARAM1);
+            String mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
     ImageView btnAddStaff;
@@ -73,29 +61,26 @@ public class Fragment_staff extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance().document("CUAHANG/" + mAuth.getUid());
 
-        db.collection("/NHANVIEN").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful())
+        db.collection("/NHANVIEN").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful())
+            {
+                staffs = new ArrayList<>();
+                for (QueryDocumentSnapshot data : task.getResult())
                 {
-                    staffs = new ArrayList<>();
-                    for (QueryDocumentSnapshot data : task.getResult())
-                    {
-                        String CCCD = data.getString("CCCD"),
-                                HOTEN = data.getString("HOTEN"),
-                                NGAYSINH = data.getString("NGAYSINH"),
-                                GIOITINH = data.getString("GIOITINH"),
-                                SDT = data.getString("SDT"),
-                                NGVL = data.getString("NGVL"),
-                                CHUCVU = data.getString("CHUCVU"),
-                                MANV = data.getId(),
-                                Email = data.getString("EMAIL");
+                    String CCCD = data.getString("CCCD"),
+                            HOTEN = data.getString("HOTEN"),
+                            NGAYSINH = data.getString("NGAYSINH"),
+                            GIOITINH = data.getString("GIOITINH"),
+                            SDT = data.getString("SDT"),
+                            NGVL = data.getString("NGVL"),
+                            CHUCVU = data.getString("CHUCVU"),
+                            MANV = data.getId(),
+                            Email = data.getString("EMAIL");
 
-                        staffs.add(new Staff(MANV, HOTEN, NGAYSINH, GIOITINH ,SDT, CHUCVU, CCCD, Email, NGVL));
-                    }
-                    adapter = new StaffAdapter(getActivity(), R.layout.layout_staff_manage, staffs);
-                    listView.setAdapter(adapter);
+                    staffs.add(new Staff(MANV, HOTEN, NGAYSINH, GIOITINH ,SDT, CHUCVU, CCCD, Email, NGVL));
                 }
+                adapter = new StaffAdapter(getActivity(), R.layout.layout_staff_manage, staffs);
+                listView.setAdapter(adapter);
             }
         });
 

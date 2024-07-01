@@ -34,17 +34,17 @@ public class MainActivity_SignUp extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        edtUser = (EditText) findViewById(R.id.edtUsername);
-        edtPw = (EditText) findViewById(R.id.edtNewPw);
-        edtPwAgain = (EditText) findViewById(R.id.edtPwAgain);
-        edtShopName = (EditText) findViewById(R.id.edtShopName);
-        btnBacked = (ImageView) findViewById(R.id.btnBacked);
+        edtUser = findViewById(R.id.edtUsername);
+        edtPw = findViewById(R.id.edtNewPw);
+        edtPwAgain = findViewById(R.id.edtPwAgain);
+        edtShopName = findViewById(R.id.edtShopName);
+        btnBacked = findViewById(R.id.btnBacked);
         btnBacked.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity_SignUp.this, MainActivity.class);
             startActivity(intent);
         });
 
-        ((Button) findViewById(R.id.btnInputSignUp)).setOnClickListener(view -> {
+        findViewById(R.id.btnInputSignUp).setOnClickListener(view -> {
             RegisterUser();
         });
     }
@@ -60,23 +60,20 @@ public class MainActivity_SignUp extends AppCompatActivity {
         }
         else{
             if(passWord.equals(checkPass)){
-                mAuth.createUserWithEmailAndPassword(userName, passWord).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            Map<String, Object> map = new HashMap<>();
-                            map.put("TEN_CUAHANG", shopName);
-                            map.put("NGAY_DK", Calendar.getInstance().getTime());
+                mAuth.createUserWithEmailAndPassword(userName, passWord).addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("TEN_CUAHANG", shopName);
+                        map.put("NGAY_DK", Calendar.getInstance().getTime());
 
-                            db.collection("CUAHANG").document(task.getResult().getUser().getUid()).set(map);
+                        db.collection("CUAHANG").document(task.getResult().getUser().getUid()).set(map);
 
-                            CustomToast.i(getApplicationContext(), "Đăng kí thành công", Toast.LENGTH_SHORT);
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                            finish();
-                        }
-                        else{
-                            CustomToast.e(getApplicationContext(), "Đăng kí thất bại " + task.getException().getMessage(), Toast.LENGTH_SHORT);
-                        }
+                        CustomToast.i(getApplicationContext(), "Đăng kí thành công", Toast.LENGTH_SHORT);
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
+                    }
+                    else{
+                        CustomToast.e(getApplicationContext(), "Đăng kí thất bại " + task.getException().getMessage(), Toast.LENGTH_SHORT);
                     }
                 });
             }
@@ -85,5 +82,4 @@ public class MainActivity_SignUp extends AppCompatActivity {
             }
         }
     }
-
 }

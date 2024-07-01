@@ -37,40 +37,17 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_statistic#newInstance} factory method to
- * create an instance of this fragment.
- */
-
 public class Fragment_statistic extends Fragment {
     private View mview;
     SimpleDateFormat dateFormat;
     BarChart barChart;
 
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public Fragment_statistic() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_statistic.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Fragment_statistic newInstance(String param1, String param2) {
         Fragment_statistic fragment = new Fragment_statistic();
         Bundle args = new Bundle();
@@ -84,16 +61,16 @@ public class Fragment_statistic extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            String mParam1 = getArguments().getString(ARG_PARAM1);
+            String mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
     TextView sumtv, avgtv, peaktv;
     RadioGroup radios;
 
-    private String[] MOY = new String[]{"Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12",},
-            WEEK = new String[] {"Tuần 1", "Tuần 2", "Tuần 3", "Tuần 4" };
+    private final String[] MOY = new String[]{"Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12",};
+    private final String[] WEEK = new String[] {"Tuần 1", "Tuần 2", "Tuần 3", "Tuần 4" };
 
     FirebaseAuth mAuth;
     DocumentReference db;
@@ -101,7 +78,6 @@ public class Fragment_statistic extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View mview = inflater.inflate(R.layout.fragment_statistic, container, false);
 
         // setup chart
@@ -129,18 +105,14 @@ public class Fragment_statistic extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance().document("CUAHANG/" + mAuth.getUid());
 
-        sumtv = (TextView) mview.findViewById(R.id.summarytv);
-        avgtv = (TextView) mview.findViewById(R.id.avgtv);
-        peaktv = (TextView) mview.findViewById(R.id.peaktv);
+        sumtv = mview.findViewById(R.id.summarytv);
+        avgtv = mview.findViewById(R.id.avgtv);
+        peaktv = mview.findViewById(R.id.peaktv);
 
-        radios = (RadioGroup)mview.findViewById(R.id.radioGr);
+        radios = mview.findViewById(R.id.radioGr);
 
+        radios.setOnCheckedChangeListener((radioGroup, i) -> {
 
-        radios.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-
-            }
         });
 
         ((RadioButton)radios.getChildAt(0)).setChecked(true);
@@ -190,56 +162,53 @@ public class Fragment_statistic extends Fragment {
         long start = instance.getTimeInMillis() / 1000;
 
         db.collection("HOADON").whereLessThan("NGHD", end).whereGreaterThanOrEqualTo("NGHD" ,start)
-                .orderBy("NGHD", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                .orderBy("NGHD", Query.Direction.ASCENDING).get().addOnCompleteListener(task -> {
 
-                        ArrayList<BarEntry> entries = new ArrayList<>();
-                        long sum = 0, avg, peak;
-                        String[] DATE = new String[7];
-                        Map<String, Integer> map = new HashMap<>();
-                        for (int i = 0; i < 7; i++)
-                        {
-                            entries.add(new BarEntry(i, 0));
-                            String date = instance.get(Calendar.DAY_OF_MONTH) + "/" + (instance.get(Calendar.MONTH)+1);
-                            DATE[i] = date;
-                            map.put(date, i);
-                            instance.add(Calendar.DAY_OF_YEAR, 1);
-                        }
-
-                        for (DocumentSnapshot data: task.getResult()) {
-                            long value = data.getLong("TRIGIA");
-                            sum += value;
-                            instance.setTimeInMillis(data.getLong("NGHD") * 1000);
-                            int index = (int)map.get(instance.get(Calendar.DAY_OF_MONTH) + "/" + (instance.get(Calendar.MONTH)+1));
-                            entries.get(index).setY(entries.get(index).getY() + value);
-                        }
-
-                        avg = sum / 7;
-                        peak = (long)entries.get(0).getY();
-
-                        for (int i = 1; i < 7; i++)
-                            if (peak < (long)entries.get(i).getY())
-                                peak = (long)entries.get(i).getY();
-
-                        sumtv.setText(sum + "");
-
-                        avgtv.setText(avg + "");
-
-                        peaktv.setText(peak + "");
-
-
-                        BarDataSet dataSet = new BarDataSet(entries, "");
-                        dataSet.setColors(Color.argb( 200,56, 161, 74)); // red
-                        dataSet.setValueTextSize(10f);
-
-                        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(DATE));
-                        BarData barData = new BarData(dataSet);
-                        barData.setBarWidth(0.5f);
-
-                        barChart.setData(barData);
-                        barChart.animateY(3000);
+                    ArrayList<BarEntry> entries = new ArrayList<>();
+                    long sum = 0, avg, peak;
+                    String[] DATE = new String[7];
+                    Map<String, Integer> map = new HashMap<>();
+                    for (int i = 0; i < 7; i++)
+                    {
+                        entries.add(new BarEntry(i, 0));
+                        String date = instance.get(Calendar.DAY_OF_MONTH) + "/" + (instance.get(Calendar.MONTH)+1);
+                        DATE[i] = date;
+                        map.put(date, i);
+                        instance.add(Calendar.DAY_OF_YEAR, 1);
                     }
+
+                    for (DocumentSnapshot data: task.getResult()) {
+                        long value = data.getLong("TRIGIA");
+                        sum += value;
+                        instance.setTimeInMillis(data.getLong("NGHD") * 1000);
+                        int index = map.get(instance.get(Calendar.DAY_OF_MONTH) + "/" + (instance.get(Calendar.MONTH)+1));
+                        entries.get(index).setY(entries.get(index).getY() + value);
+                    }
+
+                    avg = sum / 7;
+                    peak = (long)entries.get(0).getY();
+
+                    for (int i = 1; i < 7; i++)
+                        if (peak < (long)entries.get(i).getY())
+                            peak = (long)entries.get(i).getY();
+
+                    sumtv.setText(sum + "");
+
+                    avgtv.setText(avg + "");
+
+                    peaktv.setText(peak + "");
+
+
+                    BarDataSet dataSet = new BarDataSet(entries, "");
+                    dataSet.setColors(Color.argb( 200,56, 161, 74)); // red
+                    dataSet.setValueTextSize(10f);
+
+                    barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(DATE));
+                    BarData barData = new BarData(dataSet);
+                    barData.setBarWidth(0.5f);
+
+                    barChart.setData(barData);
+                    barChart.animateY(3000);
                 });
     }
 
@@ -268,49 +237,45 @@ public class Fragment_statistic extends Fragment {
         // get start tick
         long start = instance.getTimeInMillis() / 1000;
 
-
         db.collection("HOADON").whereLessThan("NGHD", end).whereGreaterThanOrEqualTo("NGHD" ,start)
-                .orderBy("NGHD", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        ArrayList<BarEntry> entries = new ArrayList<>();
-                        long sum =0, avg, peak;
-                        for (int i = 0; i < 4; i++)
-                            entries.add(new BarEntry(i, 0));
-                        for (DocumentSnapshot data : task.getResult())
-                        {
-                            instance.setTimeInMillis(data.getLong("NGHD") * 1000);
-                            int index = (int) ((instance.getTimeInMillis() / 1000 - start) / 604800);
-                            long value = data.getLong("TRIGIA");
-                            sum += value;
-                            entries.get(index).setY(entries.get(index).getY() + value);
-                        }
-
-                        avg = sum / 4;
-                        peak = (long)entries.get(0).getY();
-
-                        for (int i = 1; i < 4; i++)
-                            if (peak < (long)entries.get(i).getY())
-                                peak = (long)entries.get(i).getY();
-
-                        sumtv.setText(sum + "");
-
-                        avgtv.setText(avg + "");
-
-                        peaktv.setText(peak + "");
-
-                        BarDataSet dataSet = new BarDataSet(entries, "");
-                        dataSet.setColors(Color.argb( 200,56, 161, 74)); // green
-                        dataSet.setValueTextSize(10f);
-
-                        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(WEEK));
-                        BarData barData = new BarData(dataSet);
-                        barData.setBarWidth(0.5f);
-
-                        barChart.setData(barData);
-                        barChart.animateY(3000);
-                        barChart.invalidate();
+                .orderBy("NGHD", Query.Direction.ASCENDING).get().addOnCompleteListener(task -> {
+                    ArrayList<BarEntry> entries = new ArrayList<>();
+                    long sum =0, avg, peak;
+                    for (int i = 0; i < 4; i++)
+                        entries.add(new BarEntry(i, 0));
+                    for (DocumentSnapshot data : task.getResult())
+                    {
+                        instance.setTimeInMillis(data.getLong("NGHD") * 1000);
+                        int index = (int) ((instance.getTimeInMillis() / 1000 - start) / 604800);
+                        long value = data.getLong("TRIGIA");
+                        sum += value;
+                        entries.get(index).setY(entries.get(index).getY() + value);
                     }
+
+                    avg = sum / 4;
+                    peak = (long)entries.get(0).getY();
+
+                    for (int i = 1; i < 4; i++)
+                        if (peak < (long)entries.get(i).getY())
+                            peak = (long)entries.get(i).getY();
+
+                    sumtv.setText(sum + "");
+
+                    avgtv.setText(avg + "");
+
+                    peaktv.setText(peak + "");
+
+                    BarDataSet dataSet = new BarDataSet(entries, "");
+                    dataSet.setColors(Color.argb( 200,56, 161, 74)); // green
+                    dataSet.setValueTextSize(10f);
+
+                    barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(WEEK));
+                    BarData barData = new BarData(dataSet);
+                    barData.setBarWidth(0.5f);
+
+                    barChart.setData(barData);
+                    barChart.animateY(3000);
+                    barChart.invalidate();
                 });
     }
 
@@ -341,47 +306,44 @@ public class Fragment_statistic extends Fragment {
         long start = instance.getTimeInMillis() / 1000;
 
         db.collection("HOADON").whereLessThan("NGHD", end).whereGreaterThanOrEqualTo("NGHD" ,start)
-                .orderBy("NGHD", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        long sum = 0, peak, avg;
-                        ArrayList<BarEntry> entries = new ArrayList<>();
-                        for (int i = 0; i < 12; i++)
-                            entries.add(new BarEntry(i ,0));
+                .orderBy("NGHD", Query.Direction.ASCENDING).get().addOnCompleteListener(task -> {
+                    long sum = 0, peak, avg;
+                    ArrayList<BarEntry> entries = new ArrayList<>();
+                    for (int i = 0; i < 12; i++)
+                        entries.add(new BarEntry(i ,0));
 
-                        for (DocumentSnapshot data : task.getResult())
-                        {
-                            instance.setTimeInMillis(data.getLong("NGHD") * 1000);
-                            int index = instance.get(Calendar.MONTH);
-                            long value = data.getLong("TRIGIA");
-                            sum += value;
-                            entries.get(index).setY(entries.get(index).getY() + value);
-                        }
-
-                        avg = sum / 12;
-                        peak = (long)entries.get(0).getY();
-
-                        for (int i = 1; i < 12; i++)
-                            if (peak < (long)entries.get(i).getY())
-                                peak = (long)entries.get(i).getY();
-
-                        sumtv.setText(sum + "");
-
-                        avgtv.setText(avg + "");
-
-                        peaktv.setText(peak + "");
-
-                        BarDataSet dataSet = new BarDataSet(entries, "");
-                        dataSet.setColors(Color.argb( 200,56, 161, 74)); // green
-                        dataSet.setValueTextSize(10f);
-
-                        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(MOY));
-                        BarData barData = new BarData(dataSet);
-                        barData.setBarWidth(0.5f);
-                        barChart.setData(barData);
-                        barChart.animateY(3000);
-                        barChart.invalidate();
+                    for (DocumentSnapshot data : task.getResult())
+                    {
+                        instance.setTimeInMillis(data.getLong("NGHD") * 1000);
+                        int index = instance.get(Calendar.MONTH);
+                        long value = data.getLong("TRIGIA");
+                        sum += value;
+                        entries.get(index).setY(entries.get(index).getY() + value);
                     }
+
+                    avg = sum / 12;
+                    peak = (long)entries.get(0).getY();
+
+                    for (int i = 1; i < 12; i++)
+                        if (peak < (long)entries.get(i).getY())
+                            peak = (long)entries.get(i).getY();
+
+                    sumtv.setText(sum + "");
+
+                    avgtv.setText(avg + "");
+
+                    peaktv.setText(peak + "");
+
+                    BarDataSet dataSet = new BarDataSet(entries, "");
+                    dataSet.setColors(Color.argb( 200,56, 161, 74)); // green
+                    dataSet.setValueTextSize(10f);
+
+                    barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(MOY));
+                    BarData barData = new BarData(dataSet);
+                    barData.setBarWidth(0.5f);
+                    barChart.setData(barData);
+                    barChart.animateY(3000);
+                    barChart.invalidate();
                 });
     }
 
@@ -417,55 +379,52 @@ public class Fragment_statistic extends Fragment {
         long start = instance.getTimeInMillis() / 1000;
 
         db.collection("HOADON").whereLessThanOrEqualTo("NGHD", end).whereGreaterThanOrEqualTo("NGHD", start)
-                .orderBy("NGHD", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful())
-                        {
-                            ArrayList<BarEntry> entries = new ArrayList<>();
-                            String[] MONTH = new String[maxMonth];
-                            for (int i = 0; i < maxMonth; i++) {
-                                entries.add(new BarEntry(i ,0));
-                                MONTH[i] = MOY[i];
-                            }
-
-                            long sum = 0, peak, avg;
-                            for (DocumentSnapshot data : task.getResult())
-                            {
-                                instance.setTimeInMillis( data.getLong("NGHD") * 1000);
-                                int index = instance.get(Calendar.MONTH);
-                                long value = data.getLong("TRIGIA");
-                                sum += value;
-                                entries.get(index).setY(entries.get(index).getY() + value);
-                            }
-
-                            avg = sum / maxMonth;
-                            peak = (long)entries.get(0).getY();
-
-                            for (int i = 1; i < maxMonth; i++)
-                                if (peak < (long)entries.get(i).getY())
-                                    peak = (long)entries.get(i).getY();
-
-                            sumtv.setText(sum + "");
-
-                            avgtv.setText(avg + "");
-
-                            peaktv.setText(peak + "");
-
-                            BarDataSet dataSet = new BarDataSet(entries, "");
-                            dataSet.setColors(Color.argb( 200,56, 161, 74)); // green
-                            dataSet.setValueTextSize(10f);
-
-                            barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(MONTH));
-                            BarData barData = new BarData(dataSet);
-                            barData.setBarWidth(0.5f);
-                            barChart.setData(barData);
-                            barChart.animateY(3000);
-                            barChart.invalidate();
+                .orderBy("NGHD", Query.Direction.ASCENDING).get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful())
+                    {
+                        ArrayList<BarEntry> entries = new ArrayList<>();
+                        String[] MONTH = new String[maxMonth];
+                        for (int i = 0; i < maxMonth; i++) {
+                            entries.add(new BarEntry(i ,0));
+                            MONTH[i] = MOY[i];
                         }
-                        else
-                            CustomToast.e(getActivity(), "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT);
+
+                        long sum = 0, peak, avg;
+                        for (DocumentSnapshot data : task.getResult())
+                        {
+                            instance.setTimeInMillis( data.getLong("NGHD") * 1000);
+                            int index = instance.get(Calendar.MONTH);
+                            long value = data.getLong("TRIGIA");
+                            sum += value;
+                            entries.get(index).setY(entries.get(index).getY() + value);
+                        }
+
+                        avg = sum / maxMonth;
+                        peak = (long)entries.get(0).getY();
+
+                        for (int i = 1; i < maxMonth; i++)
+                            if (peak < (long)entries.get(i).getY())
+                                peak = (long)entries.get(i).getY();
+
+                        sumtv.setText(sum + "");
+
+                        avgtv.setText(avg + "");
+
+                        peaktv.setText(peak + "");
+
+                        BarDataSet dataSet = new BarDataSet(entries, "");
+                        dataSet.setColors(Color.argb( 200,56, 161, 74)); // green
+                        dataSet.setValueTextSize(10f);
+
+                        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(MONTH));
+                        BarData barData = new BarData(dataSet);
+                        barData.setBarWidth(0.5f);
+                        barChart.setData(barData);
+                        barChart.animateY(3000);
+                        barChart.invalidate();
                     }
+                    else
+                        CustomToast.e(getActivity(), "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT);
                 });
     }
 }

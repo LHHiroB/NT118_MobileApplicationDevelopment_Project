@@ -1,13 +1,8 @@
 package com.example.doannhom8;
 
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -20,12 +15,7 @@ public class ImageLoader {
     public static void Load(String URL, ImageView view)
     {
         StorageReference path = FirebaseStorage.getInstance().getReference().child(URL);
-        path.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(view);
-            }
-        });
+        path.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(view));
     }
     public static void Upload(String URL, ImageView view)
     {
@@ -35,11 +25,8 @@ public class ImageLoader {
         byte[] data = baos.toByteArray();
 
         UploadTask task = FirebaseStorage.getInstance().getReference().child(URL).putBytes(data);
-        task.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                // handle unsuccessful uploads
-            }
+        task.addOnFailureListener(e -> {
+            // handle unsuccessful uploads
         });
     }
 }

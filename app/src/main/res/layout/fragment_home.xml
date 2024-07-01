@@ -32,6 +32,7 @@
         android:layout_marginTop="8dp"
         android:visibility="invisible"
         android:id="@+id/swipeLayoutHome">
+
         <ListView
             android:id="@+id/lvDrinkStack"
             android:paddingLeft="11dp"

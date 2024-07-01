@@ -17,11 +17,8 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -147,13 +144,10 @@ public class Fragment_item_edit extends Fragment {
                 drink.put("TEN", tensp);
                 drink.put("GIA", giasp);
 
-                db.collection(query).add(drink).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                        if (task.isSuccessful())
-                        {
-                            ImageLoader.Upload("images/goods/" + task.getResult().getId() + ".jpg", imgDrink);
-                        }
+                db.collection(query).add(drink).addOnCompleteListener(task -> {
+                    if (task.isSuccessful())
+                    {
+                        ImageLoader.Upload("images/goods/" + task.getResult().getId() + ".jpg", imgDrink);
                     }
                 });
             }

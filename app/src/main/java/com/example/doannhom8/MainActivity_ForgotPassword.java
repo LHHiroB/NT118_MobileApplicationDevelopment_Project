@@ -39,7 +39,7 @@ public class MainActivity_ForgotPassword extends AppCompatActivity {
     private void onClickForgotPassword() {
 
         String email= Email.getText().toString().trim();
-        if(email.isEmpty() || email==null)
+        if(email.isEmpty() || email == null)
         {
             Toast.makeText(MainActivity_ForgotPassword.this,"Vui lòng nhập email", Toast.LENGTH_SHORT).show();
         }
